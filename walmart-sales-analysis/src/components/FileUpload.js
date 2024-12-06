@@ -1,7 +1,7 @@
 import React from 'react';
 import Papa from 'papaparse';
 
-const FileUpload = ({ setData }) => {
+const FileUpload = ({ setData, setColumns }) => {
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -9,7 +9,8 @@ const FileUpload = ({ setData }) => {
         header: true,
         skipEmptyLines: true,
         complete: (result) => {
-          setData(result.data); // Pass parsed data to parent component
+          setData(result.data); // Pass the parsed data
+          setColumns(Object.keys(result.data[0])); // Extract and set column names
         },
       });
     }
