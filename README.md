@@ -25,5 +25,5 @@ Follow these steps to run the application locally:
 
 ### 1. **Clone the Repository**
 ```bash
-git clone https://github.com/Argon07/BigDataProject/walmart-sales-analysis.git
+git clone https://github.com/Argon07/BigDataProject.git
 cd walmart-sales-analysis
