@@ -11,9 +11,7 @@ This project is a single-page web application (SPA) built with React.js to visua
 - **Responsive Design**: Works seamlessly across devices.
 
 ---
-## Dataset used: Walmart Dataset
 
-https://www.kaggle.com/datasets/yasserh/walmart-dataset
 
 ## **Technologies Used**
 - **React.js**: Frontend framework for building the SPA.
@@ -22,7 +20,8 @@ https://www.kaggle.com/datasets/yasserh/walmart-dataset
 - **Papaparse**: Library for parsing CSV files in JavaScript.
 
 ---
-
+## Dataset used: Walmart Dataset
+https://www.kaggle.com/datasets/yasserh/walmart-dataset
 ## **Setup Instructions**
 Follow these steps to run the application locally:
 
