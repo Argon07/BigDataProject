@@ -27,14 +27,14 @@ ChartJS.register(
   PolarAreaController,
   CategoryScale,
   LinearScale,
-  RadialLinearScale, // Required for Radar and PolarArea charts
+  RadialLinearScale,
   Title,
   Tooltip,
   Legend,
   ArcElement
 );
 
-const ChartDisplay = ({ data, columns }) => {
+const ChartDisplay = ({ data, columns, aggregation }) => {
   const [xAxis, setXAxis] = useState('');
   const [yAxis, setYAxis] = useState('');
   const [chartType, setChartType] = useState('Bar');
@@ -49,21 +49,58 @@ const ChartDisplay = ({ data, columns }) => {
     PolarArea: ['rgba(75, 192, 192, 0.6)', 'rgba(255, 99, 132, 0.6)', 'rgba(255, 206, 86, 0.6)'],
   };
 
-  const filteredData = data.map((row) => ({
-    x: row[xAxis],
-    y: parseFloat(row[yAxis] || 0),
-  }));
+  const getQuarter = (month) => {
+    if (month >= 1 && month <= 3) return 'Q1';
+    if (month >= 4 && month <= 6) return 'Q2';
+    if (month >= 7 && month <= 9) return 'Q3';
+    if (month >= 10 && month <= 12) return 'Q4';
+  };
 
+  const groupData = () => {
+    switch (aggregation) {
+      case 'Annual':
+        return data.reduce((acc, row) => {
+          const year = row['Year'];
+          if (!acc[year]) acc[year] = { label: year, value: 0 };
+          acc[year].value += parseFloat(row[yAxis] || 0);
+          return acc;
+        }, {});
+
+      case 'Half-Yearly':
+        return data.reduce((acc, row) => {
+          const half = row['Month'] <= 6 ? `H1 ${row['Year']}` : `H2 ${row['Year']}`;
+          if (!acc[half]) acc[half] = { label: half, value: 0 };
+          acc[half].value += parseFloat(row[yAxis] || 0);
+          return acc;
+        }, {});
+
+      case 'Quarterly':
+        return data.reduce((acc, row) => {
+          const quarter = `${getQuarter(row['Month'])} ${row['Year']}`;
+          if (!acc[quarter]) acc[quarter] = { label: quarter, value: 0 };
+          acc[quarter].value += parseFloat(row[yAxis] || 0);
+          return acc;
+        }, {});
+
+      case 'Monthly':
+      default:
+        return data.map((row) => ({
+          label: `${row['Month']} ${row['Year']}`,
+          value: parseFloat(row[yAxis] || 0),
+        }));
+    }
+  };
+
+  const aggregatedData = Object.values(groupData());
   const chartData = {
-    labels: filteredData.map((row) => row.x),
+    labels: aggregatedData.map((item) => item.label),
     datasets: [
       {
         label: yAxis,
-        data: filteredData.map((row) => row.y),
+        data: aggregatedData.map((item) => item.value),
         backgroundColor: colors[chartType],
         borderColor: colors[chartType].map((color) => color.replace('0.6', '1')),
         borderWidth: 1,
-        tension: chartType === 'Line' ? 0.4 : undefined, // Smoothing for line chart
       },
     ],
   };
@@ -77,39 +114,11 @@ const ChartDisplay = ({ data, columns }) => {
       case 'Line':
         return <Line data={chartData} />;
       case 'Radar':
-        return (
-          <Radar
-            data={{
-              labels: filteredData.map((row) => row.x),
-              datasets: [
-                {
-                  label: yAxis,
-                  data: filteredData.map((row) => row.y),
-                  backgroundColor: 'rgba(255, 159, 64, 0.6)',
-                  borderColor: 'rgba(255, 159, 64, 1)',
-                  borderWidth: 2,
-                },
-              ],
-            }}
-          />
-        );
+        return <Radar data={chartData} />;
       case 'Doughnut':
         return <Doughnut data={chartData} />;
       case 'PolarArea':
-        return (
-          <PolarArea
-            data={{
-              labels: filteredData.map((row) => row.x),
-              datasets: [
-                {
-                  data: filteredData.map((row) => row.y),
-                  backgroundColor: colors.PolarArea,
-                  borderWidth: 1,
-                },
-              ],
-            }}
-          />
-        );
+        return <PolarArea data={chartData} />;
       default:
         return <p>Select a valid chart type.</p>;
     }

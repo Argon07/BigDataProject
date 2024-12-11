@@ -7,8 +7,7 @@ import './App.css';
 function App() {
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState([]);
-  const [xAxis, setXAxis] = useState('');
-  const [yAxis, setYAxis] = useState('');
+  const [aggregation, setAggregation] = useState('Monthly'); // New state for aggregation
 
   return (
     <div className="container">
@@ -16,8 +15,19 @@ function App() {
       <FileUpload setData={setData} setColumns={setColumns} />
       {data.length > 0 && (
         <>
-          <ChartDisplay data={data} columns={columns} />
-          <Insights data={data} xAxis={xAxis} yAxis={yAxis} />
+          <div className="aggregation-selector">
+            <label>
+              Aggregation Level:
+              <select value={aggregation} onChange={(e) => setAggregation(e.target.value)}>
+                <option value="Monthly">Monthly</option>
+                <option value="Quarterly">Quarterly</option>
+                <option value="Half-Yearly">Half-Yearly</option>
+                <option value="Annual">Annual</option>
+              </select>
+            </label>
+          </div>
+          <ChartDisplay data={data} columns={columns} aggregation={aggregation} />
+          <Insights data={data} aggregation={aggregation} />
         </>
       )}
     </div>
