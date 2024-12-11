@@ -3,33 +3,41 @@ body {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #bed4d8;
-  color: #333;
+  background-color: #f4f7fc; /* Soft off-white background */
+ /* background-image: url('/public/convert.webp'); /* Background image */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #333; /* Neutral text color */
 }
 
 /* Container */
 .container {
-  max-width: 800px;
+  max-width: 900px;
   margin: 50px auto;
-  padding: 20px;
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  background: #ffffff; /* Crisp white background */
+  border-radius: 16px; /* Softer border radius for a modern feel */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+  border: 1px solid #dde1e7; /* Light gray border */
 }
 
 /* Heading */
 h1 {
   text-align: center;
-  color: #0078d7;
-  font-size: 2rem;
-  margin-bottom: 20px;
+  color: #004aad; /* Deep professional blue */
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1); /* Subtle text shadow */
 }
 
 h2 {
-  color: #444;
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-  border-bottom: 2px solid #0078d7;
+  color: #1976d2; /* Slightly brighter blue */
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #1976d2;
   padding-bottom: 5px;
 }
 
@@ -37,35 +45,79 @@ h2 {
 input[type="file"] {
   display: block;
   margin: 20px auto;
-  padding: 10px;
-  border: 2px solid #0078d7;
-  border-radius: 5px;
-  background-color: #f0f8ff;
+  padding: 12px 20px;
+  border: 2px solid #1976d2; /* Bright blue */
+  border-radius: 6px;
+  background-color: #e3f2fd; /* Light blue background */
   cursor: pointer;
-  color: #333;
+  color: #1976d2;
   font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  transition: all 0.3s ease;
 }
 
 input[type="file"]:hover {
-  background-color: #d7eaff;
+  background-color: #bbdefb; /* Lighter blue on hover */
+  border-color: #004aad; /* Match hover with deep blue */
+  color: #004aad;
 }
 
 /* Chart Section */
 .chart-container {
   margin-top: 30px;
+  padding: 20px;
+  background: #f8fafc; /* Neutral light gray background */
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow */
 }
 
 /* Insights Section */
 ul {
   list-style-type: none;
   padding: 0;
+  margin: 20px 0;
 }
 
 li {
   font-size: 1rem;
-  margin: 5px 0;
-  background: #f9f9f9;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
+  margin: 10px 0;
+  background: linear-gradient(135deg, #e3f2fd, #f8fafc); /* Subtle light blue gradient */
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #cfd8dc; /* Neutral light gray border */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  transition: all 0.3s ease;
+}
+
+li:hover {
+  background: linear-gradient(135deg, #bbdefb, #e3f2fd); /* Brighter hover gradient */
+  transform: translateY(-3px); /* Slight hover effect */
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  input[type="file"] {
+    font-size: 0.9rem;
+    padding: 10px 15px;
+  }
+
+  li {
+    padding: 12px;
+    font-size: 0.9rem;
+  }
 }
